@@ -5,6 +5,7 @@ import MovieList from './components/movies/movie_list'
 import Header from './components/movies/header'
 import SearchBar from './components/search_bar';
 import Favourite from './components/movies/favourite';
+import RemoveFavourite from './components/movies/remove_favourite';
 
 const App = () => {
   const [movies, setMovies] = useState([])
@@ -23,7 +24,13 @@ const App = () => {
   useEffect(() => {getMovies(searchValue);},[searchValue])
 
   const addToWatchList = (movie) => {
+    if (toWatchList.includes(movie)) return;
     const newWatchList = [...toWatchList, movie];
+    setToWatchList(newWatchList);
+  }
+
+  const removeFromWatchList = (movie) => {
+    const newWatchList = toWatchList.filter((elem) => elem.imdbID !== movie.imdbID);
     setToWatchList(newWatchList);
   }
 
@@ -47,7 +54,7 @@ const App = () => {
     </div>
 
     <div className='row'>
-      <MovieList movies={toWatchList} movieOnClick ={addToWatchList} favourite = {Favourite} />
+      <MovieList movies={toWatchList} movieOnClick ={removeFromWatchList} favourite = {RemoveFavourite} />
     </div>
 
   </div>
